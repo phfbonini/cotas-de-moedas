@@ -1,7 +1,7 @@
-const express = require('express');
-const mysql = require('mysql2');
-const cors = require('cors');
-const fetch = require('node-fetch');
+import express from 'express';
+import mysql from 'mysql2';
+import cors from 'cors';
+import fetch from 'node-fetch';
 
 //api key
 const API_KEY = 'ldu0blxk7CHLVtSQ6BoOYGZ1UZieNwCu';
