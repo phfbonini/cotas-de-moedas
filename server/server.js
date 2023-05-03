@@ -4,7 +4,7 @@ import cors from 'cors';
 import fetch from 'node-fetch';
 
 //api key
-const API_KEY = 'ldu0blxk7CHLVtSQ6BoOYGZ1UZieNwCu';
+const API_KEY = 'a7WjL1UPyB8vgIqdC8mkEg0lYEVqKQSw';
 
 const app = express();
 
@@ -145,3 +145,15 @@ app.get('/history/:id', async (req, res) => {
     res.status(500).send('Erro ao buscar dados da pesquisa');
   }
 });
+
+//retorna todas as moedas disponiveis na tabela currencies
+app.get('/currencies', async (req, res) => {
+  try {
+    const rows = await db.promise().query('SELECT * FROM currencies');
+    res.json(rows[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Erro ao buscar moedas');
+  }
+}
+);
