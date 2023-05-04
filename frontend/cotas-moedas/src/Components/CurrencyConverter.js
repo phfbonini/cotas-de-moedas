@@ -89,6 +89,14 @@ const CurrencyConverter = () => {
                 setTargetCurrencies(newTargetCurrencies);
             }
 
+            // Verificar se a moeda de destino é diferente da moeda de origem
+            if (sourceCurrency && targetCurrencies.includes(sourceCurrency)) {
+                setTargetCurrencies(targetCurrencies.map((currency) =>
+                    currency === sourceCurrency ? "MOEDA INVÁLIDA!!!" : currency
+                ));
+                return;
+            }
+
             // Se todas as moedas são válidas, fazer a conversão
             if (isValidSourceCurrency && areValidTargetCurrencies) {
                 const response = await fetch(`http://localhost:3003/compare?source=${sourceCurrency}&currencies=${currencies}`);
