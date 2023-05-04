@@ -2,6 +2,27 @@
 
 Este repositório contém uma aplicação de conversão de moedas com um DataBase em MySQL, servidor em Node.js e uma interface de usuário em React. A seguir, são fornecidas instruções sobre como executar e compilar a aplicação, bem como explicações sobre as dependências utilizadas.
 
+## Clonando Repositórios e preparando aplicação
+
+Para executar a aplicação, siga os seguintes passos:
+
+1. Clone o repositório em sua máquina local:
+
+```bash
+git clone https://github.com/phfbonini/cotas-de-moedas.git
+```
+
+2. Instale as dependências para a interface de usuário e para o servidor:
+
+```bash
+cd nome-do-repositorio/frontend/cotas-moedas
+npm install
+
+cd ../..
+
+cd server
+npm install
+```
 ## Configurando servidor data-base
 
 Recomendase utilizar o mysql worbench para este projeto, 
@@ -78,43 +99,22 @@ Se for utilizar o schema que esta no repositório, siga os passos:
 
 Se tudo estiver correto, você deve ver todas as tabelas e dados do seu banco de dados no MySQL Workbench. Caso contrário, verifique se você seguiu corretamente os passos para importá-lo.
 
-
 ## Executando a aplicação
 
-Para executar a aplicação, siga os seguintes passos:
-
-1. Clone o repositório em sua máquina local:
-
-```bash
-git clone https://github.com/phfbonini/cotas-de-moedas.git
-```
-
-2. Instale as dependências para a interface de usuário e para o servidor:
-
-```bash
-cd nome-do-repositorio/frontend/cotas-moedas
-npm install
-
-cd ../..
-
-cd server
-npm install
-```
-
-3. Verifique a disponibilidade de portas pois vamos incializa-lo em Localhost, o server vem por padrão inicializado na porta 3003, após verificar Inicie o servidor:
+1. Verifique a disponibilidade de portas pois vamos incializa-lo em Localhost, o server vem por padrão inicializado na porta 3003, após verificar Inicie o servidor:
 
 ```bash
 node server.js
 ```
 
-4. Com o server rodando, inicie a interface de usuário em um novo terminal:
+2. Com o server rodando, inicie a interface de usuário em um novo terminal:
 
 ```bash
 cd nome-do-repositorio/frontend/cotas-moedas
 npm start
 ```
 
-5. Abra o navegador e vá para o endereço http://localhost:3000 para acessar a aplicação.
+3. Abra o navegador e vá para o endereço http://localhost:3000 para acessar a aplicação.
 
 ## Dependências utilizadas
 
