@@ -58,9 +58,9 @@ const insertCurrencies = async () => {
 // Chama a função para inserir as moedas na tabela "currencies"
 insertCurrencies();
 
-// Inicia o servidor na porta 3000
-app.listen(3000, () => {
-  console.log('Servidor iniciado na porta 3000');
+// Inicia o servidor na porta 3003
+app.listen(3003, () => {
+  console.log('Servidor iniciado na porta 3003');
 });
 
 //ENDPOINTS-----------------------------
