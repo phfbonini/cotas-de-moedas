@@ -7,26 +7,30 @@ import ResultTable from "./ResultTable";
 const CurrencyConverter = () => {
     const [sourceCurrency, setSourceCurrency] = useState("");
     const [targetCurrencies, setTargetCurrencies] = useState([""]);
-    const [rates, setRates] = useState({});
     const [results, setResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
+    //utilizado para receber sempre os valores em MAIUSCULA
     const toUpper = (value) => value.toUpperCase();
 
+    //validação de moedas, tratamendo na moeda de origem no placeholder
     const handleSourceCurrencyChange = (event) => {
         setSourceCurrency(toUpper(event.target.value));
     };
 
+    //validação de moedas, tratamendo na moeda de destino no placeholder
     const handleTargetCurrencyChange = (event, index) => {
         const newTargetCurrencies = [...targetCurrencies];
         newTargetCurrencies[index] = toUpper(event.target.value);
         setTargetCurrencies(newTargetCurrencies);
     };
 
+    //adiciona moedas de destino, utilizado no botao de add
     const handleAddTargetCurrency = () => {
         setTargetCurrencies([...targetCurrencies, ""]);
     };
 
+    //remove moedas de destino, utilizado no botao de remover
     const handleRemoveTargetCurrency = (index) => {
         if (index === 0) {
             return;
@@ -36,13 +40,14 @@ const CurrencyConverter = () => {
         setTargetCurrencies(newTargetCurrencies);
     };
 
+    //remove todas as moedas de destino, utilizado no botao de remover todas
     const handleRemoveAllTargetCurrencies = () => {
         setTargetCurrencies([targetCurrencies[0]]);
     };
 
+    //validação de moedas, CASO PLACEHOLDER FOR VAZIO OU MOEDA FOR INVALIDA JUNTO DO validateCurrencies
     const handleSubmit = async (event) => {
         event.preventDefault();
-        //VALIDAÇÃO CASO PLACEHOLDER FOR VAZIO OU MOEDA FOR INVALIDA
         const { validCurrencies, invalidPositions } = await validateCurrencies(sourceCurrency.toLowerCase(), targetCurrencies.map(currency => currency.toLowerCase()));
         if (!validCurrencies.source) {
             setSourceCurrency("MOEDA INVÁLIDA!!!");
@@ -58,11 +63,12 @@ const CurrencyConverter = () => {
         console.log({ sourceCurrency, targetCurrencies });
     };
 
+    //metodo para utilizar o endpoint /currencies
     const handleConvert = async () => {
         setIsLoading(true);
         try {
             const currencies = targetCurrencies.join(',');
-            const response = await fetch(`http://localhost:3000/currencies`);
+            const response = await fetch(`http://localhost:3003/currencies`);
             const data = await response.json();
 
             // Transformar a lista de moedas em um array com os códigos das moedas
@@ -85,7 +91,7 @@ const CurrencyConverter = () => {
 
             // Se todas as moedas são válidas, fazer a conversão
             if (isValidSourceCurrency && areValidTargetCurrencies) {
-                const response = await fetch(`http://localhost:3000/compare?source=${sourceCurrency}&currencies=${currencies}`);
+                const response = await fetch(`http://localhost:3003/compare?source=${sourceCurrency}&currencies=${currencies}`);
                 const data = await response.json();
 
                 // Transformar o objeto retornado em um array de objetos
@@ -105,7 +111,7 @@ const CurrencyConverter = () => {
     };
 
     const validateCurrencies = async (sourceCurrency, targetCurrencies) => {
-        const response = await fetch('http://localhost:3000/currencies');
+        const response = await fetch('http://localhost:3003/currencies');
         const currencies = await response.json();
 
         const validCurrencies = {
@@ -142,14 +148,14 @@ const CurrencyConverter = () => {
         return { validCurrencies, invalidPositions };
     };
 
-
-
     return (
         <Container className="my-4">
-            <h1 className="text-center text-white">Conversor de Moedas</h1>
+            <h1 className="text-center text-white">Consulta de Cotas</h1>
             <h3 className="text-center text-white">Utilize o Código Identificador ex: <Badge bg="secondary">BRL, USD, EUR</Badge></h3>
             <Row>
+                {/*Criação dos formularios */}
                 <Col md={6}>
+                    {/*form de origem*/}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group controlId="sourceCurrency">
                             <Form.Label className="text-white">Moeda de Origem</Form.Label>
@@ -173,6 +179,7 @@ const CurrencyConverter = () => {
                 </Col>
 
                 <Col md={6}>
+                    {/*form de destino*/}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group>
                             <Form.Label className="text-white">Moeda de Destino</Form.Label>

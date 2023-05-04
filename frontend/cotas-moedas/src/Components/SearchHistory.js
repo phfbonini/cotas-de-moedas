@@ -8,7 +8,9 @@ function SearchHistory() {
   useEffect(() => {
     async function fetchSearches() {
       try {
-        const response = await axios.get('http://localhost:3000/history');
+        // realiza uma requisição GET para o endpoint http://localhost:3003/history
+        const response = await axios.get('http://localhost:3003/history');
+        // armazena a resposta no estado searches
         setSearches(response.data);
       } catch (error) {
         console.error(error);
@@ -18,22 +20,26 @@ function SearchHistory() {
     fetchSearches();
   }, []);
 
+  // função chamada quando o usuário clica no cabeçalho de um item do accordion
   const handleAccordionClick = async (eventKey, id) => {
+    // caso o evento seja o de fechar, não realiza nenhuma ação
     if (eventKey === '0') {
       return;
     }
 
     try {
-      const response = await axios.get(`http://localhost:3000/history/${id}`);
+      // realiza uma requisição GET para o endpoint http://localhost:3003/history/{id}
+      const response = await axios.get(`http://localhost:3003/history/${id}`);
       const { source_currency, target_currencies, search_date, rates } = response.data;
       const formattedRates = {};
 
-      // Format rates object
+      // Formata o objeto rates, para deixar as cotações no formato correto
       for (const key in rates) {
         const targetCurrency = key.slice(3).toLowerCase();
         formattedRates[targetCurrency] = rates[key];
       }
 
+      // monta o corpo do accordion com as informações da busca selecionada
       const accordionBody = (
         <Accordion.Body>
           <div>
@@ -53,6 +59,7 @@ function SearchHistory() {
         </Accordion.Body>
       );
 
+      // modifica o estado searches, para exibir ou esconder o conteúdo do accordion selecionado
       const modifiedSearches = searches.map((search) => {
         if (search.id === id) {
           search.accordionBody = accordionBody;
@@ -70,6 +77,7 @@ function SearchHistory() {
   };
 
   return (
+    // Componente Accordion do React Bootstrap, que exibe as buscas realizadas pelo usuário
     <Accordion defaultActiveKey="0">
       {searches.map((search) => (
         <Accordion.Item key={search.id} eventKey={search.isAccordionOpen ? search.id.toString() : '0'}>
